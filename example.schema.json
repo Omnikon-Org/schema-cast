@@ -1,0 +1,14 @@
+{
+  "name": "User",
+  "fields": [
+    { "name": "id", "type": "uuid", "required": true, "primary": true },
+    { "name": "email", "type": "string", "required": true, "unique": true },
+    { "name": "age", "type": "number", "required": false },
+    { "name": "role", "type": "enum", "values": ["admin", "user", "guest"], "default": "user" },
+    { "name": "createdAt", "type": "date", "required": true },
+    { "name": "profile", "type": "object", "fields": [
+      { "name": "bio", "type": "string" },
+      { "name": "avatar", "type": "string" }
+    ]}
+  ]
+}

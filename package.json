@@ -1,0 +1,43 @@
+{
+  "name": "schema-bridge",
+  "version": "1.0.0",
+  "description": "Single schema definition → TypeScript + Zod + Mongoose + PostgreSQL. One source of truth.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "typescript",
+    "zod",
+    "mongoose",
+    "postgresql",
+    "codegen",
+    "schema",
+    "developer-tools"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "chokidar": "^5.0.0",
+    "commander": "^15.0.0",
+    "js-yaml": "^4.2.0",
+    "pluralize": "^8.0.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.9.3",
+    "@types/pluralize": "^0.0.33",
+    "mongoose": "^9.7.0",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9",
+    "zod": "^4.4.3"
+  },
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "schema-bridge": "dist/cli.js"
+  }
+}
