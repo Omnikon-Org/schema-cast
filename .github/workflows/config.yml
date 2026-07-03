@@ -1,0 +1,6 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/Omnikon-Org/schema-cast/discussions
+    about: Ask general questions or discuss ideas.
