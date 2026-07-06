@@ -17,27 +17,8 @@
       "type": "string",
       "format": "email",
       "x-schema-cast": { "unique": true }
-    },
-    "age": {
-      "type": "number"
-    },
-    "role": {
-      "type": "string",
-      "enum": ["admin", "user", "guest"],
-      "default": "user"
-    },
-    "createdAt": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "profile": {
-      "type": "object",
-      "properties": {
-        "bio": { "type": "string" },
-        "avatar": { "type": "string" }
-      }
     }
   },
-  "required": ["id", "email", "createdAt"],
+  "required": ["id", "email"],
   "additionalProperties": false
 }

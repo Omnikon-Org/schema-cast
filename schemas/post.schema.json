@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/post.schema.json",
+  "title": "Post",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "format": "uuid", "x-schema-cast": { "primaryKey": true } },
+    "title": { "type": "string", "maxLength": 200 },
+    "authorId": {
+      "$ref": "./user.schema.json",
+      "x-schema-cast": {
+        "relationship": "many-to-one",
+        "cascadeDelete": true
+      }
+    }
+  },
+  "required": ["id", "title", "authorId"]
+}
