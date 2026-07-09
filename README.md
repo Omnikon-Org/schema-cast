@@ -18,7 +18,9 @@
 
 Schema Cast is **NOT** a replacement for JSON Schema. It is a powerful framework that **extends** JSON Schema.
 
-By strictly adhering to the JSON Schema standard, you define your data models once. Schema Cast enriches these standard models with persistence logic, ORM bindings, and API definitions using the custom `x-schema-cast` namespace. 
+By strictly adhering to the JSON Schema standard, you define your data models once. Schema Cast enriches these standard models with persistence logic, ORM bindings, and API definitions using the custom `x-schema-cast` namespace.
+
+The `x-schema-cast` namespace follows the JSON Schema extension model: standard validators like AJV and Hyperjump safely ignore this key, while Schema Cast uses it to drive persistence, code generation, and migrations.
 
 Because we use standard JSON Schema, your schemas remain 100% compatible with existing ecosystem tooling:
 - **AJV / Hyperjump** for runtime validation
@@ -68,17 +70,25 @@ Create a `user.schema.json` file using standard JSON Schema. Add ORM and relatio
 
 ### 2. Generate Your Code
 
-Given the above schema, Schema Cast generates everything you need across your stack:
+Schema Cast is designed to generate everything you need across your stack. Here's what's available today versus what's on the way:
+
+**Available now**
 
 | Output | Use Case |
 |--------|----------|
-| **TypeScript / Rust / Go / Python** | SDKs and frontend type safety |
 | **Zod / AJV Wrappers** | Request and form validation |
 | **Mongoose / Prisma / TypeORM** | Database models and ORM configurations |
-| **PostgreSQL** | DDL and automated migrations |
-| **OpenAPI** | Full v3 specifications |
+| **PostgreSQL DDL** | Table and column generation from your schema |
 
-All generated in < 100ms. All staying in sync automatically.
+**Planned (see [Roadmap](#roadmap))**
+
+| Output | Use Case | Target |
+|--------|----------|--------|
+| **OpenAPI v3** | Full API specifications | Q3 2026 |
+| **Automated migration diffing** | Schema-snapshot-based `ALTER` plans | Q4 2026 |
+| **TypeScript / Rust / Go / Python SDKs** | Typed clients with built-in networking | Q1 2027 |
+
+All outputs stay in sync automatically as your schemas change.
 
 ---
 
@@ -89,7 +99,7 @@ Schema Cast is designed as a modular compiler that works in 4 layers:
 1. **Standard JSON Schema:** You write standard JSON Schema with `$ref` pointers.
 2. **Extension Metadata:** You add `x-schema-cast` to properties to define relationships, primary keys, and indexes.
 3. **Compiler Engine:** Schema Cast resolves `$ref` graphs natively, validates the JSON Schema, and extracts the metadata into a unified Internal Representation (IR).
-4. **Generators:** The IR is passed to language-specific plugins (TypeScript, Go, Rust, PostgreSQL, Prisma) to generate code.
+4. **Generators:** The IR is passed to language-specific plugins to generate code.
 
 ### Relationships using `$ref`
 
@@ -139,17 +149,19 @@ All Schema Cast specific logic lives strictly inside the `x-schema-cast` object.
 
 ## Migrations
 
-Schema Cast includes a powerful migration engine that does not require you to write manual SQL.
+Schema Cast's migration engine is under active development, targeted for **Q4 2026** (see [Roadmap](#roadmap)). Once shipped, it's designed to work like this, without requiring you to write manual SQL:
 
 1. Schema Cast saves a snapshot of your schema graph.
 2. When you modify your JSON schemas, `schema-cast migrate` diffs the new schemas against the snapshot.
 3. It generates an explicit SQL migration plan (e.g., `ALTER TABLE users ADD COLUMN age INT`).
 
+Today, Schema Cast can already generate PostgreSQL DDL directly from a schema; the diff-based migration planner on top of that is what's still in progress.
+
 ---
 
 ## Why this design?
 
-Inventing a new schema language requires reinventing formatters, validators, and editor integrations. 
+Inventing a new schema language requires reinventing formatters, validators, and editor integrations.
 
 By building natively on **JSON Schema**, Schema Cast gives you:
 - **Zero Learning Curve:** If you know JSON Schema, you know Schema Cast.
@@ -158,14 +170,6 @@ By building natively on **JSON Schema**, Schema Cast gives you:
 
 ---
 
-## Roadmap
-
-- **Q3 2026:** Native OpenAPI v3 generation from Schema Cast projects.
-- **Q4 2026:** Advanced database migration engine (diffing schema snapshots).
-- **Q1 2027:** Universal SDK Generation (TypeScript, Rust, Go, Python clients with built-in networking).
-- **Q2 2027:** Visual Schema Graph Editor.
-
----
 
 ## License
 
